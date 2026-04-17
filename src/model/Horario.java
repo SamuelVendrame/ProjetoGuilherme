@@ -1,3 +1,4 @@
+package model;
 
 public class Horario {
 
@@ -11,7 +12,7 @@ public class Horario {
         }
 
         if (horarioInicio.equals(horarioFim)) {
-            throw new IllegalArgumentException("Horario inicial e final nao podem ser iguais");
+            throw new IllegalArgumentException("model.Horario inicial e final nao podem ser iguais");
         }
 
         this.horarioInicio = horarioInicio;
