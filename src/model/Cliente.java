@@ -10,6 +10,10 @@ public class Cliente {
         if(nome == null || nome.isBlank()){
             throw new IllegalArgumentException("Nome não pode ser vazio.");
         }
+        if(telefone == null || nome.isBlank()){
+            throw new IllegalArgumentException("TELEFONE não pode ser vazio.");
+
+        }
 
         this.nome = nome;
 

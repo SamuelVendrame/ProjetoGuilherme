@@ -1,5 +1,8 @@
 package view;
 
+import controller.AluguelController;
+import model.Aluguel;
+
 import java.util.Scanner;
 
 public class ReservarView {
@@ -19,6 +22,9 @@ public class ReservarView {
 
         System.out.print("Digite horário de fim: ");
         String fim = scanner.nextLine();
+
+        AluguelController controller = new AluguelController();
+        Aluguel aluguel = controller.registrarAluguel(nome, telefone, inicio, fim);
 
         System.out.println("\nReserva solicitada com sucesso:");
         System.out.println("Cliente: " + nome);
