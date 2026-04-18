@@ -1,63 +1,65 @@
-
+import controller.BibliotecaController;
+import model.Emprestimo;
+import model.Livro;
+import view.BibliotecaView;
 
 public class Main {
 
     public static void main(String[] args) {
-        Biblioteca biblioteca = new Biblioteca();
+        BibliotecaController controller = new BibliotecaController();
+        BibliotecaView view = new BibliotecaView();
 
-        Livro livro1 = new Livro("Dom Casmurro", "Machado de Assis", 3);
-        Livro livro2 = new Livro("O Cortico", "Aluisio Azevedo", 1);
-        biblioteca.cadastrarLivro(livro1);
-        biblioteca.cadastrarLivro(livro2);
+        controller.cadastrarLivro("Dom Casmurro", "Machado de Assis", 3);
+        controller.cadastrarLivro("O Cortico", "Aluisio Azevedo", 1);
 
-        Aluno aluno1 = new Aluno("Carlos Silva", "2024001");
-        Aluno aluno2 = new Aluno("Ana Souza", "2024002");
-        biblioteca.cadastrarAluno(aluno1);
-        biblioteca.cadastrarAluno(aluno2);
+        controller.cadastrarAluno("Carlos Silva", "2024001");
+        controller.cadastrarAluno("Ana Souza", "2024002");
 
-        System.out.println("=== Livros cadastrados ===");
-        biblioteca.getLivros().forEach(System.out::println);
+        view.exibirLivros(controller.getLivros());
+        view.exibirAlunos(controller.getAlunos());
 
-        System.out.println("\n=== Realizando emprestimos ===");
-        Emprestimo emp1 = biblioteca.realizarEmprestimo(livro1.getId(), aluno1.getId());
-        System.out.println("Emprestimo realizado: " + emp1);
+        view.exibirTitulo("Realizando Emprestimos");
 
-        Emprestimo emp2 = biblioteca.realizarEmprestimo(livro2.getId(), aluno2.getId());
-        System.out.println("Emprestimo realizado: " + emp2);
+        int idLivro1 = controller.getLivros().get(0).getId();
+        int idLivro2 = controller.getLivros().get(1).getId();
+        int idAluno1 = controller.getAlunos().get(0).getId();
+        int idAluno2 = controller.getAlunos().get(1).getId();
 
-        System.out.println("\n=== Tentando emprestar livro sem estoque ===");
+        Emprestimo emp1 = controller.realizarEmprestimo(idLivro1, idAluno1);
+        view.exibirEmprestimoRealizado(emp1);
+
+        Emprestimo emp2 = controller.realizarEmprestimo(idLivro2, idAluno2);
+        view.exibirEmprestimoRealizado(emp2);
+
+        view.exibirTitulo("Tentando Emprestar Livro sem Estoque");
         try {
-            biblioteca.realizarEmprestimo(livro2.getId(), aluno1.getId());
+            controller.realizarEmprestimo(idLivro2, idAluno1);
         } catch (IllegalStateException e) {
-            System.out.println("Erro esperado: " + e.getMessage());
+            view.exibirErro(e.getMessage());
         }
 
-        System.out.println("\n=== Emprestimos ativos ===");
-        biblioteca.listarEmprestimosAtivos().forEach(System.out::println);
+        view.exibirEmprestimosAtivos(controller.listarEmprestimosAtivos());
+        view.exibirAlunosComPendencias(controller.listarAlunosComEmprestimosAbertos());
 
-        System.out.println("\n=== Alunos com livros em aberto ===");
-        biblioteca.listarAlunosComEmprestimosAbertos().forEach(System.out::println);
+        view.exibirTitulo("Registrando Devolucao");
+        controller.registrarDevolucao(emp1.getId());
+        Livro livro1 = controller.getLivros().get(0);
+        view.exibirDevolucaoRealizada(livro1.getTitulo(), livro1.getQuantidadeDisponivel());
 
-        System.out.println("\n=== Registrando devolucao do emp1 ===");
-        biblioteca.registrarDevolucao(emp1.getId());
-        System.out.println("Devolucao registrada.");
-        System.out.println("Quantidade disponivel de '" + livro1.getTitulo() + "': " + livro1.getQuantidadeDisponivel());
+        view.exibirEmprestimosAtivos(controller.listarEmprestimosAtivos());
 
-        System.out.println("\n=== Emprestimos ativos apos devolucao ===");
-        biblioteca.listarEmprestimosAtivos().forEach(System.out::println);
-
-        System.out.println("\n=== Tentando cadastrar livro com titulo vazio ===");
+        view.exibirTitulo("Tentando Cadastrar Livro com Titulo Vazio");
         try {
-            new Livro("", "Autor X", 2);
+            controller.cadastrarLivro("", "Autor X", 2);
         } catch (IllegalArgumentException e) {
-            System.out.println("Erro esperado: " + e.getMessage());
+            view.exibirErro(e.getMessage());
         }
 
-        System.out.println("\n=== Tentando cadastrar livro com quantidade negativa ===");
+        view.exibirTitulo("Tentando Cadastrar Livro com Quantidade Negativa");
         try {
-            new Livro("Livro Y", "Autor Y", -5);
+            controller.cadastrarLivro("Livro Y", "Autor Y", -5);
         } catch (IllegalArgumentException e) {
-            System.out.println("Erro esperado: " + e.getMessage());
+            view.exibirErro(e.getMessage());
         }
     }
 }
