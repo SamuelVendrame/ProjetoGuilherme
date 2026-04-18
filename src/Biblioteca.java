@@ -33,7 +33,6 @@ public class Biblioteca {
         } else if (livro.getQuantidadeDisponivel() == 0) {
             throw new IllegalStateException("N ha exemplares disponiveis para emprestimo.");
         } else {
-            // Removi o decremento daqui porque o seu construtor de Emprestimo ja faz isso
             Emprestimo emprestimo = new Emprestimo(livro, aluno);
             this.emprestimos.add(emprestimo);
             return emprestimo;
