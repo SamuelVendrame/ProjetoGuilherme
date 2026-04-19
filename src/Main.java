@@ -7,8 +7,11 @@ import java.time.LocalDate;
 public class Main {
 
     public static void main(String[] args) {
+        // criando o controller pra gerenciar tudo
         LanchoneteController c = new LanchoneteController();
         LanchoneteView view = new LanchoneteView();
+
+        // cadastrando os produtos (tudo minusculo pra ir rapido)
         c.cadastrarProduto("x-burguer", "hamburguer com queijo e alface", 18.50);
         c.cadastrarProduto("coca-cola 350ml", "refrigerante gelado", 6.00);
         c.cadastrarProduto("batata frita", "porcao grande crocante", 12.00);
