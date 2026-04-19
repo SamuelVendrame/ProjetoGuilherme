@@ -1,3 +1,5 @@
+package model;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,10 +29,10 @@ public class Pedido {
 
     public void finalizar() {
         if (status.equals("FINALIZADO")) {
-            throw new IllegalStateException("Este pedido já foi finalizado.");
+            throw new IllegalStateException("Este pedido ja foi finalizado.");
         }
         if (itens.isEmpty()) {
-            throw new IllegalStateException("nao e possivel finalizar um pedido sem itens");
+            throw new IllegalStateException("Nao eh possível finalizar um pedido sem itens.");
         }
         this.status = "FINALIZADO";
     }
@@ -46,6 +48,6 @@ public class Pedido {
 
     @Override
     public String toString() {
-        return "Pedido{ id = " + id + ", data = " + dataPedido + ", status = '" + status + "', total = R$" + String.format("%.2f", getValorTotal()) + ", itens=" + itens.size() + "}";
+        return "Pedido{id=" + id + ", data=" + dataPedido + ", status='" + status + "', total=R$" + String.format("%.2f", getValorTotal()) + ", itens=" + itens.size() + "}";
     }
 }

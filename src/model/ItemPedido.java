@@ -1,3 +1,5 @@
+package model;
+
 public class ItemPedido {
 
     private static int contadorId = 1;
@@ -28,6 +30,7 @@ public class ItemPedido {
 
     @Override
     public String toString() {
-        return "ItemPedido{produto='" + produto.getNome() + "', quantidade=" + quantidade + ", subtotal=R$" + String.format("%.2f", getSubtotal()) + "}";
+        return "ItemPedido{produto='" + produto.getNome() + "', quantidade=" + quantidade +
+                ", subtotal=R$" + String.format("%.2f", getSubtotal()) + "}";
     }
 }

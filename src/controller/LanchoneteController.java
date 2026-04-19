@@ -1,20 +1,25 @@
+package controller;
+
+import model.Pedido;
+import model.Produto;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Lanchonete {
+public class LanchoneteController {
 
     private List<Produto> produtos;
     private List<Pedido> pedidos;
 
-    public Lanchonete() {
+    public LanchoneteController() {
         this.produtos = new ArrayList<>();
         this.pedidos = new ArrayList<>();
     }
 
-    public void cadastrarProduto(Produto produto) {
-        produtos.add(produto);
+    public void cadastrarProduto(String nome, String descricao, double preco) {
+        produtos.add(new Produto(nome, descricao, preco));
     }
 
     public Pedido abrirPedido() {
@@ -27,8 +32,8 @@ public class Lanchonete {
         Pedido pedido = buscarPedidoPorId(idPedido);
         Produto produto = buscarProdutoPorId(idProduto);
 
-        if (pedido == null) throw new IllegalArgumentException("Pedido nao encontrado.");
-        if (produto == null) throw new IllegalArgumentException("Produto nao encontrado.");
+        if (pedido == null) throw new IllegalArgumentException("Pedido não encontrado.");
+        if (produto == null) throw new IllegalArgumentException("Produto não encontrado.");
 
         pedido.adicionarItem(produto, quantidade);
     }
@@ -40,12 +45,20 @@ public class Lanchonete {
     }
 
     public List<Pedido> consultarPedidosPorData(LocalDate data) {
-        return pedidos.stream().filter(p -> p.getDataPedido().equals(data)).collect(Collectors.toList());
+        return pedidos.stream()
+                .filter(p -> p.getDataPedido().equals(data))
+                .collect(Collectors.toList());
     }
 
     public double calcularFaturamentoPorData(LocalDate data) {
-        return consultarPedidosPorData(data).stream().filter(p -> p.getStatus().equals("FINALIZADO")).mapToDouble(Pedido::getValorTotal).sum();
+        return consultarPedidosPorData(data).stream()
+                .filter(p -> p.getStatus().equals("FINALIZADO"))
+                .mapToDouble(Pedido::getValorTotal)
+                .sum();
     }
+
+    public List<Produto> getProdutos() { return produtos; }
+    public List<Pedido> getPedidos() { return pedidos; }
 
     private Pedido buscarPedidoPorId(int id) {
         return pedidos.stream().filter(p -> p.getId() == id).findFirst().orElse(null);
@@ -54,7 +67,4 @@ public class Lanchonete {
     private Produto buscarProdutoPorId(int id) {
         return produtos.stream().filter(p -> p.getId() == id).findFirst().orElse(null);
     }
-
-    public List<Produto> getProdutos() { return produtos; }
-    public List<Pedido> getPedidos() { return pedidos; }
 }

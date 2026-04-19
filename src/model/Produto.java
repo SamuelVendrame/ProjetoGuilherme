@@ -1,3 +1,5 @@
+package model;
+
 public class Produto {
 
     private static int contadorId = 1;
@@ -9,10 +11,10 @@ public class Produto {
 
     public Produto(String nome, String descricao, double preco) {
         if (nome == null || nome.trim().isEmpty()) {
-            throw new IllegalArgumentException("Nome do produto nao pode ser vazio.");
+            throw new IllegalArgumentException("nome do produto nao pode ser vazio.");
         }
         if (preco <= 0) {
-            throw new IllegalArgumentException("Preco do produto deve ser maior que zero.");
+            throw new IllegalArgumentException("preco do produto deve ser maior que zero.");
         }
         this.id = contadorId++;
         this.nome = nome;
