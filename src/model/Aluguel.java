@@ -2,14 +2,14 @@ package model;
 
 public class Aluguel {
 
-    public Cliente cliente;
-    public Horario horario;
-    public String status = "aberto";
-    public double valor = 100.0;
+    private Cliente cliente;
+    private Horario horario;
+    private String status;
 
-    public Aluguel(Cliente cliente, Horario horario){
+    public Aluguel(Cliente cliente, Horario horario) {
         this.cliente = cliente;
         this.horario = horario;
+        this.status = "aberto";
     }
 
     public void finalizar() {
@@ -18,4 +18,9 @@ public class Aluguel {
         }
         status = "finalizado";
     }
+
+    public double getValor() { return horario.getValor(); }
+    public Cliente getCliente() { return cliente; }
+    public Horario getHorario() { return horario; }
+    public String getStatus() { return status; }
 }

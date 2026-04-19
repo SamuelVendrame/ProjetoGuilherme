@@ -12,10 +12,10 @@ public class AluguelController {
     private List<Aluguel> alugueis = new ArrayList<>();
 
     public Aluguel registrarAluguel(String nome, String telefone,
-                                    String inicio, String fim) {
+                                    String inicio, String fim, double valor) {
 
         Cliente cliente = new Cliente(nome, telefone);
-        Horario horario = new Horario(inicio, fim);
+        Horario horario = new Horario(inicio, fim, valor);
         Aluguel aluguel = new Aluguel(cliente, horario);
 
         alugueis.add(aluguel);
@@ -30,8 +30,8 @@ public class AluguelController {
     public double faturamento() {
         double total = 0;
         for (Aluguel a : alugueis) {
-            if (a.status.equals("finalizado")) {
-                total += a.valor;
+            if (a.getStatus().equals("finalizado")) {
+                total += a.getValor();
             }
         }
         return total;
