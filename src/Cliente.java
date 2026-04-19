@@ -1,28 +1,20 @@
 public class Cliente {
+    private String nome;
+    private String telefone;
 
-    public Long id;
-    public String nome;
-    public String telefone;
-
-    public Cliente(String nome, String telefone){
-        if(nome == null || nome.isBlank()){
-            throw new IllegalArgumentException("Nome não pode ser vazio.");
+    public Cliente(String nome, String telefone) {
+        if (nome == null || nome.isEmpty()) {
+            throw new IllegalArgumentException("nome do cliente nao pode ser vazio.");
         }
-
         this.nome = nome;
-
         this.telefone = telefone;
-    }
-
-    public String getTelefone() {
-        return telefone;
-    }
-
-    public Long getId() {
-        return id;
     }
 
     public String getNome() {
         return nome;
+    }
+
+    public String getTelefone() {
+        return telefone;
     }
 }

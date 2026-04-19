@@ -1,4 +1,3 @@
-
 public class Horario {
 
     private String horarioInicio;
@@ -7,11 +6,11 @@ public class Horario {
     public Horario(String horarioInicio, String horarioFim) {
 
         if (horarioInicio == null || horarioFim == null || horarioFim.isBlank() || horarioInicio.isBlank()) {
-            throw new IllegalArgumentException("Horarios nao podem ser nulos");
+            throw new IllegalArgumentException("horarios nao podem ser nulos");
         }
 
         if (horarioInicio.equals(horarioFim)) {
-            throw new IllegalArgumentException("Horario inicial e final nao podem ser iguais");
+            throw new IllegalArgumentException("horario inicial e final nao podem ser iguais");
         }
 
         this.horarioInicio = horarioInicio;
