@@ -3,37 +3,56 @@ package view;
 import controller.AluguelController;
 import model.Aluguel;
 
-import java.util.Scanner;
-
 public class ReservarView {
 
-    Scanner scanner = new Scanner(System.in);
-
     public void iniciar() {
-        try{
-        System.out.print("Digite seu nome: ");
-        String nome = scanner.nextLine();
-
-        System.out.print("Digite seu telefone: ");
-        String telefone = scanner.nextLine();
-
-        System.out.print("Digite horario de início: ");
-        String inicio = scanner.nextLine();
-
-        System.out.print("Digite horário de fim: ");
-        String fim = scanner.nextLine();
 
         AluguelController controller = new AluguelController();
-        Aluguel aluguel = controller.registrarAluguel(nome, telefone, inicio, fim);
 
-        System.out.println("\nReserva solicitada com sucesso:");
-        System.out.println("Cliente: " + nome);
-        System.out.println("telefone: " + telefone);
-        System.out.println("horario: " + inicio + " às " + fim);
-        System.out.println("Preço: 100R$");
+        System.out.println("clientes cadastrados:\n");
 
-    } catch (IllegalArgumentException e) {
-        System.out.println("Erro: " + e.getMessage());
-    }
+        Aluguel a1 = controller.registrarAluguel("samuel vendrame", "11999999999", "19:00", "20:00");
+        Aluguel a2 = controller.registrarAluguel("maria silva", "11988888888", "20:00", "21:00");
+
+        System.out.println("cliente{nome='" + a1.cliente.getNome() + "', telefone='" + a1.cliente.getTelefone() + "'}");
+        System.out.println("cliente{nome='" + a2.cliente.getNome() + "', telefone='" + a2.cliente.getTelefone() + "'}");
+
+        System.out.println("\nabrindo aluguel 1...\n");
+        System.out.println("aluguel criado:");
+        System.out.println("aluguel{cliente='" + a1.cliente.getNome() + "', horario=" + a1.horario.getHorarioInicio() + "-" + a1.horario.getHorarioFim() + ", status='" + a1.status + "', total=r$100,00}");
+
+        System.out.println("\nfinalizando aluguel 1...\n");
+
+        a1.finalizar();
+        System.out.println("aluguel finalizado:");
+        System.out.println("aluguel{cliente='" + a1.cliente.getNome() + "', horario=" + a1.horario.getHorarioInicio() + "-" + a1.horario.getHorarioFim() + ", status='" + a1.status + "', total=r$100,00}");
+
+        System.out.println("\ntentando finalizar novamente:\n");
+
+        try{a1.finalizar();
+        } catch (Exception e) {
+            System.out.println("erro esperado: " + e.getMessage());
+        }
+        System.out.println("\nverificando alugueis:\n");
+
+        for(Aluguel a : controller.listar()) {
+            System.out.println("aluguel{cliente='" + a.cliente.getNome() + "', horario=" + a.horario.getHorarioInicio() + "-" + a.horario.getHorarioFim() + ", status='" + a.status + "', total=r$100,00}");
+        }
+
+        System.out.println("\nfaturamento do dia:\n");
+        System.out.println("total faturado hoje: r$" + String.format("%.2f", controller.faturamento()));
+        System.out.println("\ntestando erro de nome vazio:\n");
+
+        try {
+            controller.registrarAluguel("", "123", "10:00", "11:00");
+        } catch (Exception e) {
+            System.out.println("erro : " + e.getMessage());
+        }
+        System.out.println("\ntestando erro de horario invalido:\n");
+        try {
+            controller.registrarAluguel("joao", "999", "20:00", "20:00");
+        } catch (Exception e) {
+            System.out.println("erro: " + e.getMessage());
+        }
     }
 }
